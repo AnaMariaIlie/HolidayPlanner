@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 public class Country extends Entity {
 
-	private PriorityQueue<County> countryCounties;
+	public PriorityQueue<County> countryCounties;
 
 	public Country(String entityName) {
 		super(entityName);
@@ -14,8 +14,8 @@ public class Country extends Entity {
 
 			public int compare(County w1, County w2) {
 
-				double comp1 = w1.getCountyCities().peek().getCityLocations().peek().getAveragePrice();
-				double comp2 = w2.getCountyCities().peek().getCityLocations().peek().getAveragePrice();
+				double comp1 = w1.countyCities.peek().cityLocations.peek().getAveragePrice();
+				double comp2 = w2.countyCities.peek().cityLocations.peek().getAveragePrice();
 
 				return comp1 > comp2 ? 1 : (comp1 < comp2 ? -1 : 0);
 			}
@@ -25,10 +25,6 @@ public class Country extends Entity {
 
 	public void addCounty(County county) {
 		countryCounties.add(county);
-	}
-
-	public PriorityQueue<County> getCountryCounties() {
-		return countryCounties;
 	}
 
 }

@@ -5,6 +5,31 @@ import java.util.Arrays;
 
 public class Location {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nameLocation == null) ? 0 : nameLocation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		if (nameLocation == null) {
+			if (other.nameLocation != null)
+				return false;
+		} else if (!nameLocation.equals(other.nameLocation))
+			return false;
+		return true;
+	}
+
 	public String nameLocation;
 	public City cityLocation;
 	public County countyLocation;

@@ -28,10 +28,6 @@ public class Activity {
 		activityLocations.add(location);
 	}
 
-	public PriorityQueue<Location> getLocationsForAnActivity() {
-		return this.activityLocations;
-	}
-
 	@Override
 	public String toString() {
 		return name;

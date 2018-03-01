@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 public class City extends Entity {
 
-	private PriorityQueue<Location> cityLocations;
+	public PriorityQueue<Location> cityLocations;
 
 	public City(String entityName) {
 		super(entityName);
@@ -20,10 +20,6 @@ public class City extends Entity {
 
 	public void addLocation(Location location) {
 		cityLocations.add(location);
-	}
-
-	public PriorityQueue<Location> getCityLocations() {
-		return cityLocations;
 	}
 
 }
