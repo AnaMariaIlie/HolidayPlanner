@@ -2,6 +2,7 @@ package entities;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
 
@@ -27,5 +28,11 @@ public class Period {
 		}
 
 		return output;
+	}
+
+	public int noAvailableDays() {
+
+		int days = (int) ChronoUnit.DAYS.between(start.toInstant(), end.toInstant());
+		return days;
 	}
 }

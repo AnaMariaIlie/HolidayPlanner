@@ -1,24 +1,14 @@
 package entities;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.ArrayList;
 
 public class County extends Entity {
 
-	public PriorityQueue<City> countyCities;
+	public ArrayList<City> countyCities;
 
 	public County(String entityName) {
 		super(entityName);
-		this.countyCities = new PriorityQueue<City>(new Comparator<City>() {
-
-			public int compare(City w1, City w2) {
-
-				double comp1 = w1.cityLocations.peek().getAveragePrice();
-				double comp2 = w2.cityLocations.peek().getAveragePrice();
-
-				return comp1 > comp2 ? 1 : (comp1 < comp2 ? -1 : 0);
-			}
-		});
+		this.countyCities = new ArrayList<City>();
 	}
 
 	public void addCity(City city) {

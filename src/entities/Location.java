@@ -5,31 +5,6 @@ import java.util.Arrays;
 
 public class Location {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nameLocation == null) ? 0 : nameLocation.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Location other = (Location) obj;
-		if (nameLocation == null) {
-			if (other.nameLocation != null)
-				return false;
-		} else if (!nameLocation.equals(other.nameLocation))
-			return false;
-		return true;
-	}
-
 	public String nameLocation;
 	public City cityLocation;
 	public County countyLocation;
@@ -39,12 +14,16 @@ public class Location {
 	public ArrayList<Activity> possibleActivities;
 	public Period period;
 
-	// TODO: tostring activities
 	public String showDetails() {
 		return nameLocation + " is situated in " + cityLocation.entityName + "\nThe price per day is: " + averagePrice
 				+ "$" + "\nYou have the oportunity to do following activities: "
 				+ Arrays.toString(possibleActivities.toArray()) + "\nYou may arrive here by : "
 				+ period.showDate("start") + "\nAnd you may leave before : " + period.showDate("end");
+	}
+
+	@Override
+	public String toString() {
+		return nameLocation;
 	}
 
 	public String getNameLocation() {
@@ -73,6 +52,31 @@ public class Location {
 
 	public void setAveragePrice(double averagePrice) {
 		this.averagePrice = averagePrice;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nameLocation == null) ? 0 : nameLocation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		if (nameLocation == null) {
+			if (other.nameLocation != null)
+				return false;
+		} else if (!nameLocation.equals(other.nameLocation))
+			return false;
+		return true;
 	}
 
 }
