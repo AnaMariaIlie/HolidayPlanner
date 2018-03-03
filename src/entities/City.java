@@ -6,4 +6,7 @@ public class City extends Entity {
 		super(entityName);
 	}
 
+	public City() {
+
+	}
 }

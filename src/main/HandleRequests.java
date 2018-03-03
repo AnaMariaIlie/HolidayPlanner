@@ -18,21 +18,42 @@ import entities.Period;
 
 public class HandleRequests {
 
+	/**
+	 * HashMap to identify a location.
+	 */
 	public static HashMap<String, Location> asocNameLocation;
+	/**
+	 * HashMap to identify an activity.
+	 */
 	public static HashMap<String, Activity> asocNameActivity;
-	public static HashMap<String, Country> asocNameCountries;
-	public static HashMap<String, County> asocNameCounties;
-	public static HashMap<String, City> asocNameCities;
+	/**
+	 * HashMap to identify a country.
+	 */
+	public static HashMap<String, Country> asocNameCountry;
+	/**
+	 * HashMap to identify a county.
+	 */
+	public static HashMap<String, County> asocNameCounty;
+	/**
+	 * HashMap to identify a city.
+	 */
+	public static HashMap<String, City> asocNameCity;
 
 	public HandleRequests() {
 		super();
 		HandleRequests.asocNameLocation = new HashMap<String, Location>();
 		HandleRequests.asocNameActivity = new HashMap<String, Activity>();
-		HandleRequests.asocNameCities = new HashMap<String, City>();
-		HandleRequests.asocNameCounties = new HashMap<String, County>();
-		HandleRequests.asocNameCountries = new HashMap<String, Country>();
+		HandleRequests.asocNameCity = new HashMap<String, City>();
+		HandleRequests.asocNameCounty = new HashMap<String, County>();
+		HandleRequests.asocNameCountry = new HashMap<String, Country>();
 	}
 
+	/**
+	 * This method reads the dates about locations from "dates.txt" file. The
+	 * format of a line that represents a location is:
+	 * name,city,county,country,average price,activity;activity;activity,start
+	 * date-end date
+	 */
 	public static HandleRequests readDates() {
 
 		HandleRequests handleRequests = new HandleRequests();
@@ -47,126 +68,134 @@ public class HandleRequests {
 				boolean cityContainsLocation = false;
 				Location resultLocation = new Location();
 				String[] tokens = line.split(",");
-				resultLocation.nameLocation = tokens[0];
+				if (asocNameLocation.get(tokens[0]) == null) {
 
-				resultLocation.setAveragePrice(Double.parseDouble(tokens[4]));
+					resultLocation.setNameLocation(tokens[0]);
+					resultLocation.setAveragePrice(Double.parseDouble(tokens[4]));
 
-				/******** Parse city ******/
-				City tokCity;
-				/* If the city already exists, we take it from the hashMap */
-				if (asocNameCities.get(tokens[1]) != null) {
-					tokCity = asocNameCities.get(tokens[1]);
-				} else {
-					tokCity = new City(tokens[1]);
-					asocNameCities.put(tokens[1], tokCity);
-				}
-
-				/*
-				 * If the location already exists in the city, we don't add it
-				 * again.
-				 */
-				cityContainsLocation = tokCity.locations.contains(resultLocation);
-				if (!cityContainsLocation) {
-					tokCity.addLocation(resultLocation);
-				}
-				resultLocation.cityLocation = tokCity;
-
-				/******** Parse county ******/
-				County tokCounty;
-				/* If the county already exists, we take it from the hashMap */
-				if (asocNameCounties.get(tokens[2]) != null) {
-
-					tokCounty = asocNameCounties.get(tokens[2]);
+					/******** Parse city ******/
+					City tokCity;
 					/*
-					 * If the city already exists in the county, we don't add it
-					 * again.
+					 * If the city already exists, we take it from the hashMap
 					 */
-					if (!tokCounty.countyCities.contains(tokCity)) {
-						tokCounty.addCity(tokCity);
+					if (asocNameCity.get(tokens[1]) != null) {
+						tokCity = asocNameCity.get(tokens[1]);
+					} else {
+						tokCity = new City(tokens[1]);
+						asocNameCity.put(tokens[1], tokCity);
 					}
-				} else {
-					tokCounty = new County(tokens[2]);
-					asocNameCounties.put(tokens[2], tokCounty);
-					tokCounty.addCity(tokCity);
-				}
 
-				/*
-				 * We add the location in the county's locations only if it
-				 * doesn't exists in the city.
-				 */
-				if (!cityContainsLocation) {
-					tokCounty.addLocation(resultLocation);
-				}
-				resultLocation.countyLocation = tokCounty;
-
-				/******** Parse country ******/
-				Country tokCountry;
-				/* If the country already exists, we take it from the hashMap */
-				if (asocNameCountries.get(tokens[3]) != null) {
-					tokCountry = asocNameCountries.get(tokens[3]);
 					/*
-					 * If the county already exists in the country, we don't add
+					 * If the location already exists in the city, we don't add
 					 * it again.
 					 */
-					if (!tokCountry.countryCounties.contains(tokCounty)) {
-						tokCountry.addCounty(tokCounty);
+					cityContainsLocation = tokCity.getLocations().contains(resultLocation);
+					if (!cityContainsLocation) {
+						tokCity.addLocation(resultLocation);
 					}
-				} else {
-					tokCountry = new Country(tokens[3]);
-					asocNameCountries.put(tokens[3], tokCountry);
-					tokCountry.addCounty(tokCounty);
-				}
+					resultLocation.setCityLocation(tokCity);
 
-				/*
-				 * We add the location in the country's locations only if it
-				 * doesn't exists in the city.
-				 */
-				if (!cityContainsLocation) {
-					tokCountry.addLocation(resultLocation);
-				}
-				resultLocation.countryLocation = tokCountry;
+					/******** Parse county ******/
+					County tokCounty;
+					/*
+					 * If the county already exists, we take it from the hashMap
+					 */
+					if (asocNameCounty.get(tokens[2]) != null) {
 
-				/******** Parse activities **************/
-				String[] activityTokens = tokens[5].split(";");
-				ArrayList<Activity> activitiesList = new ArrayList<Activity>();
-				int activityTokensLen = activityTokens.length;
-
-				for (int i = 0; i < activityTokensLen; i++) {
+						tokCounty = asocNameCounty.get(tokens[2]);
+						/*
+						 * If the city already exists in the county, we don't
+						 * add it again.
+						 */
+						if (!tokCounty.getCountyCities().contains(tokCity)) {
+							tokCounty.addCity(tokCity);
+						}
+					} else {
+						tokCounty = new County(tokens[2]);
+						asocNameCounty.put(tokens[2], tokCounty);
+						tokCounty.addCity(tokCity);
+					}
 
 					/*
-					 * If the activity already exists, we take it from the
+					 * We add the location in the county's locations only if it
+					 * doesn't exists in the city.
+					 */
+					if (!cityContainsLocation) {
+						tokCounty.addLocation(resultLocation);
+					}
+					resultLocation.setCountyLocation(tokCounty);
+
+					/******** Parse country ******/
+					Country tokCountry;
+					/*
+					 * If the country already exists, we take it from the
 					 * hashMap
 					 */
-					if (asocNameActivity.get(activityTokens[i]) != null) {
-
-						if (!cityContainsLocation) {
-							asocNameActivity.get(activityTokens[i]).addLocation(resultLocation);
+					if (asocNameCountry.get(tokens[3]) != null) {
+						tokCountry = asocNameCountry.get(tokens[3]);
+						/*
+						 * If the county already exists in the country, we don't
+						 * add it again.
+						 */
+						if (!tokCountry.getCountryCounties().contains(tokCounty)) {
+							tokCountry.addCounty(tokCounty);
 						}
-						activitiesList.add(asocNameActivity.get(activityTokens[i]));
 					} else {
-
-						Activity varActivity = new Activity(activityTokens[i]);
-						if (!cityContainsLocation) {
-							varActivity.addLocation(resultLocation);
-						}
-						activitiesList.add(varActivity);
-						asocNameActivity.put(activityTokens[i], varActivity);
+						tokCountry = new Country(tokens[3]);
+						asocNameCountry.put(tokens[3], tokCountry);
+						tokCountry.addCounty(tokCounty);
 					}
 
+					/*
+					 * We add the location in the country's locations only if it
+					 * doesn't exists in the city.
+					 */
+					if (!cityContainsLocation) {
+						tokCountry.addLocation(resultLocation);
+					}
+					resultLocation.setCountryLocation(tokCountry);
+
+					/******** Parse activities **************/
+					String[] activityTokens = tokens[5].split(";");
+					ArrayList<Activity> activitiesList = new ArrayList<Activity>();
+					int activityTokensLen = activityTokens.length;
+
+					for (int i = 0; i < activityTokensLen; i++) {
+
+						/*
+						 * If the activity already exists, we take it from the
+						 * hashMap
+						 */
+						if (asocNameActivity.get(activityTokens[i]) != null) {
+
+							if (!cityContainsLocation) {
+								asocNameActivity.get(activityTokens[i]).addLocation(resultLocation);
+							}
+							activitiesList.add(asocNameActivity.get(activityTokens[i]));
+						} else {
+
+							Activity varActivity = new Activity(activityTokens[i]);
+							if (!cityContainsLocation) {
+								varActivity.addLocation(resultLocation);
+							}
+							activitiesList.add(varActivity);
+							asocNameActivity.put(activityTokens[i], varActivity);
+						}
+
+					}
+
+					resultLocation.possibleActivities = activitiesList;
+
+					/******** Parse date ********************/
+					String[] dateTokens = tokens[6].split("-");
+					DateFormat format = new SimpleDateFormat("MMMM dd.yyyy", Locale.ENGLISH);
+					Date startDate = format.parse(dateTokens[0]);
+					Date endDate = format.parse(dateTokens[1]);
+					Period holidayPeriod = new Period(startDate, endDate);
+					resultLocation.period = holidayPeriod;
+
+					asocNameLocation.put(tokens[0], resultLocation);
 				}
-
-				resultLocation.possibleActivities = activitiesList;
-
-				/******** Parse date ********************/
-				String[] dateTokens = tokens[6].split("-");
-				DateFormat format = new SimpleDateFormat("MMMM dd.yyyy", Locale.ENGLISH);
-				Date startDate = format.parse(dateTokens[0]);
-				Date endDate = format.parse(dateTokens[1]);
-				Period holidayPeriod = new Period(startDate, endDate);
-				resultLocation.period = holidayPeriod;
-
-				asocNameLocation.put(tokens[0], resultLocation);
-
 			}
 
 		} catch (Exception e) {

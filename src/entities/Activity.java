@@ -4,8 +4,14 @@ import java.util.ArrayList;
 
 public class Activity {
 
-	public String name;
-	public ArrayList<Location> activityLocations;
+	/**
+	 * The name of a particular activity.
+	 */
+	protected String name;
+	/**
+	 * A list of locations where you can practice the activity.
+	 */
+	protected ArrayList<Location> activityLocations;
 
 	public Activity(String name) {
 		super();
@@ -15,6 +21,14 @@ public class Activity {
 
 	public Activity() {
 
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<Location> getActivityLocations() {
+		return activityLocations;
 	}
 
 	public void addLocation(Location location) {

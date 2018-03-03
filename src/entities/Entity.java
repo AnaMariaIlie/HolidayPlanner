@@ -8,9 +8,17 @@ import java.util.Date;
 
 public class Entity {
 
-	public String entityName;
-	public ArrayList<Location> locations;
-	public static final int FIVE = 5;
+	/**
+	 * The name of an entity(city, county, country or others if you want to add
+	 * more).
+	 */
+	protected String entityName;
+	/**
+	 * List of locations in entity. I keep this in every entity to extract
+	 * faster the best location.
+	 */
+	protected ArrayList<Location> locations;
+	private static final int FIVE = 5;
 
 	public Entity(String entityName) {
 		super();
@@ -18,10 +26,21 @@ public class Entity {
 		this.locations = new ArrayList<Location>();
 	}
 
+	public Entity() {
+	}
+
 	public void addLocation(Location location) {
 		this.locations.add(location);
 	}
 
+	/**
+	 * This method shows top 5 locations, if they exist.
+	 * 
+	 * @param start
+	 *            date
+	 * @param end
+	 *            date
+	 */
 	public void topFiveLocations(Date A, Date B) {
 
 		ArrayList<Location> resultList = new ArrayList<Location>();
@@ -41,8 +60,8 @@ public class Entity {
 		int k = 0;
 		for (Location location : this.locations) {
 
-			Date startDate = location.period.start;
-			Date endDate = location.period.end;
+			Date startDate = location.period.getStart();
+			Date endDate = location.period.getEnd();
 
 			/* The desired period must fit in the location period */
 			if ((!startDate.after(A) && !endDate.before(A)) && (!startDate.after(B) && !endDate.before(B))) {
@@ -58,12 +77,20 @@ public class Entity {
 
 		if (!(k >= FIVE)) {
 
-			System.out.println("\nThere are no 5 locations." + "\nAvailable locations are: "
+			System.out.println("\nThere are no 5 available locations." + "\nAvailable locations are: "
 					+ Arrays.toString(resultList.toArray()));
 		} else {
 			System.out.println("\nThe best 5 available locations are : " + Arrays.toString(resultList.toArray()));
 		}
 
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public ArrayList<Location> getLocations() {
+		return locations;
 	}
 
 	@Override

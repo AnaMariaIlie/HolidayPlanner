@@ -5,18 +5,52 @@ import java.util.Arrays;
 
 public class Location {
 
-	public String nameLocation;
-	public City cityLocation;
-	public County countyLocation;
-	public Country countryLocation;
+	/**
+	 * The name of the location.
+	 */
+	private String nameLocation;
+	/**
+	 * The city in which the location is situated.
+	 */
+	private City cityLocation;
+	/**
+	 * The county in which the location is situated.
+	 */
+	private County countyLocation;
+	/**
+	 * The country in which the location is situated.
+	 */
+	private Country countryLocation;
+	/**
+	 * The average price per day.
+	 */
 	private double averagePrice;
-
+	/**
+	 * A list of activities that can be practiced.
+	 */
 	public ArrayList<Activity> possibleActivities;
+	/**
+	 * The available period for visits.
+	 */
 	public Period period;
 
+	public Location(String nameLocation) {
+		super();
+		this.nameLocation = nameLocation;
+		this.possibleActivities = new ArrayList<Activity>();
+	}
+
+	public Location() {
+
+	}
+
+	/**
+	 * 
+	 * @return details about a location.
+	 */
 	public String showDetails() {
-		return nameLocation + " is situated in " + cityLocation.entityName + "\nThe price per day is: " + averagePrice
-				+ "$" + "\nYou have the oportunity to do following activities: "
+		return "\n" + nameLocation + " is situated in " + cityLocation.entityName + "\nThe average price per day is: "
+				+ averagePrice + "$." + "\nYou have the oportunity to do following activities: "
 				+ Arrays.toString(possibleActivities.toArray()) + "\nYou may arrive here by : "
 				+ period.showDate("start") + "\nAnd you may leave before : " + period.showDate("end");
 	}
@@ -24,34 +58,6 @@ public class Location {
 	@Override
 	public String toString() {
 		return nameLocation;
-	}
-
-	public String getNameLocation() {
-		return nameLocation;
-	}
-
-	public Location(String nameLocation, City cityLocation, County countyLocation, Country countryLocation,
-			double averagePrice, ArrayList<Activity> possibleActivities, Period period) {
-		super();
-		this.nameLocation = nameLocation;
-		this.cityLocation = cityLocation;
-		this.countyLocation = countyLocation;
-		this.countryLocation = countryLocation;
-		this.averagePrice = averagePrice;
-		this.possibleActivities = possibleActivities;
-		this.period = period;
-	}
-
-	public Location() {
-
-	}
-
-	public double getAveragePrice() {
-		return averagePrice;
-	}
-
-	public void setAveragePrice(double averagePrice) {
-		this.averagePrice = averagePrice;
 	}
 
 	@Override
@@ -77,6 +83,62 @@ public class Location {
 		} else if (!nameLocation.equals(other.nameLocation))
 			return false;
 		return true;
+	}
+
+	public String getNameLocation() {
+		return nameLocation;
+	}
+
+	public void setNameLocation(String nameLocation) {
+		this.nameLocation = nameLocation;
+	}
+
+	public City getCityLocation() {
+		return cityLocation;
+	}
+
+	public void setCityLocation(City cityLocation) {
+		this.cityLocation = cityLocation;
+	}
+
+	public County getCountyLocation() {
+		return countyLocation;
+	}
+
+	public void setCountyLocation(County countyLocation) {
+		this.countyLocation = countyLocation;
+	}
+
+	public Country getCountryLocation() {
+		return countryLocation;
+	}
+
+	public void setCountryLocation(Country countryLocation) {
+		this.countryLocation = countryLocation;
+	}
+
+	public double getAveragePrice() {
+		return averagePrice;
+	}
+
+	public void setAveragePrice(double averagePrice) {
+		this.averagePrice = averagePrice;
+	}
+
+	public ArrayList<Activity> getPossibleActivities() {
+		return possibleActivities;
+	}
+
+	public void setPossibleActivities(ArrayList<Activity> possibleActivities) {
+		this.possibleActivities = possibleActivities;
+	}
+
+	public Period getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Period period) {
+		this.period = period;
 	}
 
 }

@@ -1,8 +1,8 @@
 Chindia park,Targoviste,Dambovita,Romania,10,walks;cycling;jogging;picnic,January 2.2018-January 3.2018
-Chindia park,Ana,Dambovita,Romania,12,walks;cycling;jogging;clubbing,January 2.2018-January 20.2018
+Old Center,Titu,Dambovita,Romania,12,walks;cycling;jogging;clubbing,January 2.2018-January 20.2018
 Peles Castle,Sinaia,Prahova,Romania,30.5,visit;walks;eat,January 1.2018-April 20.2018
 Colosseum,Rome,Lazio,Italy,200,walks;cycling;jogging;eat,January 2.2018-May 5.2018
 Auschwitz,Oswiecim,Birkenau,Poland,300,visit concentration camp,January 2.2018-January 16.2018
 Salina Turda,Turda,Cluj,Romania,20,eat;play games;visit,February 2.2018-March 15.2018
 Red Lake,Gheorgheni,Harghita,Romania,20,swimming;boating,January 2.2018-October 25.2018
-ske,Gheorgheni,Harghita,Romania,200,swimming;boating,January 2.2018-October 25.2018
+Baile Covasna,Sfantu Gheorghe,Covasna,Romania,200,salt therapies;sauna;massage,June 2.2018-October 25.2018

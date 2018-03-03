@@ -1,0 +1,87 @@
+
+
+
+
+
+
+				     Holiday Planner
+				     
+			
+	Pentru realizarea aplicatiei am citit datele locatiilor dintr-un fisier("dates.txt").
+	Fisierul contine cate o locatie pe linie.
+	Pentru a introduce mai multe locatii va trebui sa se tina cont de un anumit format,
+astfel: nume,oras,judet(district),tara,pret mediu pe zi,activitate;activitate;activitate,data
+de inceput-data de final(luna zi.an).
+	Pentru a introduce comenzi afisez un mesaj de inceput in care se specifica ce
+comenzi pot fi date, precum si formatul lor. Apoi clientul va putea introduce comenzile,
+care vor fi parsate si in functie de ce parametri sunt dati se apeleaza functiile
+corespunzatoare.
+	Organizarea claselor:
+		Pentru a realiza structura ierarhica tara->judet->oras am realizat o clasa
+"Entity", care este clasa de baza pentru fiecare entitate din ierarhie, si care 
+contine membri si metode comune entitatilor. De asemenea, clasa corespunzatoare
+unei tari("Country") contine o lista de judete, clasa corespunzatoare unui judet
+("County") contine o lista de orase, iar clasa corespunzatoare unui oras("City")
+contine o lista de locatii. Am optat pentru pastrarea unei liste de locatii in
+fiecare entitate pentru a putea cauta mai usor cea mai buna locatie.
+
+	Alte clase folosite sunt: 
+		Activity - in care tin o lista cu locatiile in care se poate realiza o
+anumita activitate.
+
+		Period - in care tin datele de inceput si de final in care se poate vizita
+o locatie, precum si metode de prelucrare a datelor.
+
+		Location - locatia propriu-zisa cu atributele specifice, date in fisierul
+de intrare.
+
+		HandleRequests - clasa in care parsez fisierul cu datele locatiilor si in
+care retin structuri pentru a facilita cautarea unei locatii/activitati/tari, a
+unui oras/judet. Pe masura ce citesc datele pentru o locatie le introduc in aceste
+structuri si in campurile locatiei, astfel incat ma asigur sa nu existe o locatie/
+activitate/tara sau un oras/judet duplicat.
+
+	Methods - clasa in care parsez datele introduse de utilizator si in care tin
+metodele de afisare a informariilor despre o locatie, top  locatii, cea mai ieftina
+locatie pentru a realiza o activitate.
+	In metoda de afisarea informatiilor despre o locatie, dupa ce caut locatia,
+dupa nume, in hashMap-ul din "HandleRequests", apelez o metoda a clasei "Location"
+care returneaza datele locatiei, apoi le afisez.
+	Pentru a afla top 5 locatii, mai intai aflu tipul(tara, judet, oras, etc.), apoi
+in functie de el iau lista de locatii, o sortez crescator dupa pretul mediu pe zi
+folosind un comparator. Verific si daca perioada data ca parametru se incadreaza in
+perioada in care se poate vizita acea locatie. Daca si aceasta conditie este indeplinita,
+afisez primele 5 locatii, sau daca nu exista 5, le afisez pe toate disponibile.
+	Pentru a afla cea mai ieftina locatie pentru a practica o activitate, caut
+activitatea respectiva in hashMap(ca si la locatie), iau lista de locatii pentru
+ea, o sortez, iar apoi verific daca poate fi practicata 10 zile intr-o locatie. Daca
+exista o astfel de locatie, o afisez.
+
+	Test - Clasa in care am realizat cateva teste pentru aplicatie in framework-ul
+de test JUnit. In aceste test am verificat daca datele din fisier sunt introduse corect.
+
+	Exempu rulare:
+	Hy! I'm your holiday planner and I'll help you find the best places to spend your holiday. All you have to do is to relax.
+	Here are the available commands: 
+	Show info <location name>
+	Top 5 <type of the place(city, county, country)>,<name of the place>,<start of  the period(month day.year)>,<end of the period(month day.year)>
+	Cheapest 10 <activity name>
+
+	> Show info Old Center
+	
+	Old Center is situated in Titu
+	The average price per day is: 12.0$.
+	You have the oportunity to do following activities: [walks, cycling, jogging, clubbing]
+	You may arrive here by : Tuesday, 02 01 2018
+	And you may leave before : Saturday, 20 01 2018
+	> Top 5 county,Dambovita,January 2.2018,January 3.2018
+
+	There are no 5 available locations.
+	Available locations are: [Chindia park, Old Center]
+	> Cheapest 10 eat
+
+	The best location to do eat for 10 days is Salina Turda from Turda for just 20.0$.
+	> exit
+	Thank you! We hope you've found your dream location.
+	
+
